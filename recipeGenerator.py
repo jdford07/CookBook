@@ -1,33 +1,56 @@
+from dataclasses import dataclass, field
+from typing import List, Optional
 from dotenv import load_dotenv, find_dotenv
 import mongoTest
 
+@dataclass
+class IngredientsSection:
+    """ """
+    sectionTitle: str
+    ingredients: list[object] # Dictionary of ingredients and measurements
 
-class RecipeSection:
-    def __init__(self, sectionTitle, ingredients, steps):
-        self.sectionTitle = sectionTitle
-        self.ingredients = ingredients # Dictionary of ingredients and measurements
-        self.steps       = steps # List of instruction steps
-        
+@dataclass
+class Ingredient:
+    """ """
+    ingredientName: str
+    ingredientAmount: str # 1/2, 1/3, 1...100+
+    ingredientMeasurement: str # tsp, tbsp, cup, mg, g, kg, ml, l
+    ingredientSuggestedBrand: Optional[str] = None
+    
+@dataclass
+class StepsSection:
+    """ """
+    sectionTitle: str
+    steps: list[str] # Dictionary of ingredients and measurements
 
-# Class that defines all notable elements of an OSRS News Article
+@dataclass
 class Recipe:
-    def __init__(self, title, author, category, description, articleLink, videoLink, sections, notes, servings, glutenClass, dietClass, prepTime, cookTime, restTime, difficulty):
-        self.title       = title
-        self.author      = author
-        self.category    = category # Sauce, Soup, Main Course, Side Dish
-        self.description = description
-        self.articleLink = articleLink
-        self.videoLink   = videoLink
-        self.sections    = sections # List containing objects of instruction steps and ingredients
-        self.notes       = notes
-        self.servings    = servings
-        self.glutenClass = glutenClass # Gluten Free, Gluten Friendly, Neither
-        self.dietClass   = dietClass # Vegan, Vegetarian
-        self.prepTime    = prepTime
-        self.cookTime    = cookTime
-        self.restTime    = restTime
-        self.totalTime   = int(prepTime) + int(cookTime) + int(restTime)
-        self.difficulty  = difficulty
+    """Class that defines all notable elements of a given Recipe"""
+    recipeTitle: str
+    recipeAuthor: str
+    recipeCategory: str
+    recipeDescription: str
+    recipeArticleLink: str
+    recipeVideoLink: str
+    recipeIngredientsSections: List[object]
+    recipeStepsSections: List[object]
+    recipeNotes: List[str]
+    recipeServings: str
+    recipeGlutenClass: str
+    recipeDietClass: str
+    recipePrepTime: int
+    recipeCookTime: int
+    recipeRestTime: int
+    recipeTotalTime: int = field(init=False)
+    recipeDifficulty: str
+    
+    def __post_init__(self):
+        self.recipeTotalTime = self.recipePrepTime + self.recipeCookTime + self.recipeRestTime
+        if(self.recipeTotalTime == None):
+            self.recipeTotalTime = 0
+   
+        
+        
 
 def aggregateIngredients(recipeList):
     ingredientsDict = {}
@@ -44,13 +67,39 @@ def aggregateIngredients(recipeList):
         
     return ingredientsDict
 
-ingreds1 = {'Dried Thyme':'1 tsp', 'Ground Allspice':'1/2tsp', 'Sugar':'1 1/2 tbsp', 'Sea Salt':'1/2tsp'}
-steps1 = ["Add the thyme, allspice, coconut sugar, sea salt, black pepper, garlic powder, cinnamon, cayenne, olive oil, and freshly squeezed lime juice in a mixing bowl. Stir to combine.", "Add the chicken to a 1 quart freezer-safe sealable bag, followed by the jerk spice marinade. Press the air out of the bag and seal tightly, making sure to press the marinade around the chicken to coat.", "Place in the fridge to marinate at least 30 minutes, up to overnight."]
+ingred1 = Ingredient("Dried Thyme", "1", "tsp")
+ingred2 = Ingredient("Ground Allspice", "1/2", "tsp")
+ingred3 = Ingredient("Sugar", "1 1/2", "tbsp")
+ingred4 = Ingredient("Sea Salt", "1/2", "tsp", "Morton")
+ingred5 = Ingredient("Chicken Breast", "2", "breasts", "Perdue")
+ingredSection1a = IngredientsSection("Spices", [ingred1, ingred2, ingred3, ingred4])
+ingredSection1b = IngredientsSection("Proteins", [ingred5])
 
-ingreds2 = {'Dried Thyme':'2 tsp', 'Ground Allspice':'1 tsp', 'Sugar':'3 tbsp', 'Sea Salt':'2 tsp'}
-steps2 = ["Add the thyme, allspice, coconut sugar, sea salt, black pepper, garlic powder, cinnamon, cayenne, olive oil, and freshly squeezed lime juice in a mixing bowl. Stir to combine.", "Add the chicken to a 1 quart freezer-safe sealable bag, followed by the jerk spice marinade. Press the air out of the bag and seal tightly, making sure to press the marinade around the chicken to coat."]
+steps1 = ["Add the thyme, allspice, coconut sugar, sea salt, black pepper, garlic powder, cinnamon, cayenne, olive oil, and freshly squeezed lime juice in a mixing bowl. Stir to combine.", 
+          "Add the chicken to a 1 quart freezer-safe sealable bag, followed by the jerk spice marinade. Press the air out of the bag and seal tightly, making sure to press the marinade around the chicken to coat.", 
+          "Place in the fridge to marinate at least 30 minutes, up to overnight."]
+stepSection1 = (None, steps1)
 
-print(ingreds1)
+
+ingred6 = Ingredient("Dried Thyme", "2", "tsp")
+ingred7 = Ingredient("Ground Allspice", "3/4", "tsp")
+ingred8 = Ingredient("Sugar", "4", "tbsp")
+ingred9 = Ingredient("Sea Salt", "2", "tsp", "Morton")
+ingred10 = Ingredient("Chicken Breast", "4", "breasts", "Perdue")
+ingredSection2a = IngredientsSection("Spices", [ingred6, ingred7, ingred8, ingred9])
+ingredSection2b = IngredientsSection("Proteins", [ingred10])
+steps2 = ["Add the thyme, allspice, coconut sugar, sea salt, black pepper, garlic powder, cinnamon, cayenne, olive oil, and freshly squeezed lime juice in a mixing bowl. Stir to combine.", 
+          "Add the chicken to a 1 quart freezer-safe sealable bag, followed by the jerk spice marinade. Press the air out of the bag and seal tightly, making sure to press the marinade around the chicken to coat."]
+stepSection2 = ("Combine it all", steps2)
+
+ingreds3 = {'All Purpose Flour':'3 cups', 
+            'Salt':'1 tsp',
+            'Baking Powder':'1 tsp',
+            'Vegetable Oil':'1/3 cup',
+            'Hot Water':'1 cup'}
+step3 = [""
+    
+]
 
 recipe1 = Recipe("Jerk Chicken Marinade",
                  "Lacey Baier",
@@ -58,8 +107,9 @@ recipe1 = Recipe("Jerk Chicken Marinade",
                  "This easy jerk chicken marinade is Caribbean-inspired and full of spice and flavor",
                  "https://www.asweetpeachef.com/best-chicken-marinades/#wprm-recipe-container-22000",
                  None,
-                 [RecipeSection("Jerk Chicken", ingreds1, steps1), RecipeSection("Garlic Chicken", ingreds2, steps2)],
-                 "Absolutely smashin",
+                 [IngredientsSection("Spices", [ingred1, ingred2, ingred3, ingred4]), IngredientsSection("Proteins", [ingred10])],
+                 [StepsSection("Jerk Chicken", steps1), StepsSection("Garlic Chicken", steps2)],
+                 ["Absolutely smashin","Smashing cause good"],
                  "2 Chicken Breasts",
                  "GlutenFree",
                  "Regular",
@@ -74,8 +124,9 @@ recipe2 = Recipe("Garlic Chicken Marinade",
                  "This easy jerk chicken marinade is Caribbean-inspired and full of spice and flavor",
                  "https://www.asweetpeachef.com/best-chicken-marinades/#wprm-recipe-container-22000",
                  None,
-                 [RecipeSection("Jerk Chicken", ingreds1, steps1), RecipeSection("Garlic Chicken", ingreds2, steps2)],
-                 "Absolutely smashin",
+                 [IngredientsSection("Jerk Chicken", [ingred6, ingred7, ingred8, ingred9]), IngredientsSection("Garlic Chicken", [ingred10])],
+                 [StepsSection("Jerk Chicken", steps1), StepsSection("Garlic Chicken", steps2)],
+                 ["Absolutely smashin","Smashing cause good"],
                  "2 Chicken Breasts",
                  "GlutenFree",
                  "Regular",
@@ -86,6 +137,6 @@ recipe2 = Recipe("Garlic Chicken Marinade",
 
 recipeList = [recipe1, recipe2]
 print(recipeList)
-aggregateIngredients(recipeList)
+#aggregateIngredients(recipeList)
 print(recipe1)
 
