@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 from dotenv import load_dotenv, find_dotenv
-import mongoTest
+import mongoDBRequests as mongo
+import json
 
 @dataclass
 class IngredientsSection:
@@ -16,6 +17,8 @@ class Ingredient:
     ingredientAmount: str # 1/2, 1/3, 1...100+
     ingredientMeasurement: str # tsp, tbsp, cup, mg, g, kg, ml, l
     ingredientSuggestedBrand: Optional[str] = None
+    ingredientNotes: Optional[List[str]] = None
+    
     
 @dataclass
 class StepsSection:
@@ -28,21 +31,25 @@ class Recipe:
     """Class that defines all notable elements of a given Recipe"""
     recipeTitle: str
     recipeAuthor: str
-    recipeCategory: str
-    recipeDescription: str
-    recipeArticleLink: str
-    recipeVideoLink: str
-    recipeIngredientsSections: List[object]
-    recipeStepsSections: List[object]
-    recipeNotes: List[str]
-    recipeServings: str
-    recipeGlutenClass: str
-    recipeDietClass: str
+    recipeDescription: str 
+    recipeSource: str # Either web article link or cookbook
+    recipeVideoLink: Optional[str]
+    recipeCategory: str # Seasoning, Appetizer, Side, Snack, Drink, Breakfast, Lunch, Dinner, Dessert
+    recipeCuisineType: str # Asian, American, Mexican, Italian, Greek, German
+    recipeGlutenType: str # Glutenfree, Not GF, gluten friendly, translate to Icons for funsies
+    recipeDietType: str # Vegan, Vegetarian, Onmivore, translate to Icons for funsies
+    recipeServings: int
     recipePrepTime: int
     recipeCookTime: int
     recipeRestTime: int
     recipeTotalTime: int = field(init=False)
     recipeDifficulty: str
+    recipeSeason: Optional[str] # Summer, Winter, Fall, Christmas, Thanksgiving
+    cookingMethod: List[str] # PressureCooker, SlowCooker, Air-fry, Oven, Skillet, Grill
+    recipeIngredientsSections: List[object]
+    recipeStepsSections: List[object]
+    recipeNotes: List[str] # Special tips
+    recipeKeywords: List[str]
     
     def __post_init__(self):
         self.recipeTotalTime = self.recipePrepTime + self.recipeCookTime + self.recipeRestTime
@@ -103,40 +110,178 @@ step3 = [""
 
 recipe1 = Recipe("Jerk Chicken Marinade",
                  "Lacey Baier",
-                 "Sauce",
                  "This easy jerk chicken marinade is Caribbean-inspired and full of spice and flavor",
                  "https://www.asweetpeachef.com/best-chicken-marinades/#wprm-recipe-container-22000",
                  None,
-                 [IngredientsSection("Spices", [ingred1, ingred2, ingred3, ingred4]), IngredientsSection("Proteins", [ingred10])],
-                 [StepsSection("Jerk Chicken", steps1), StepsSection("Garlic Chicken", steps2)],
-                 ["Absolutely smashin","Smashing cause good"],
-                 "2 Chicken Breasts",
-                 "GlutenFree",
-                 "Regular",
+                 "Marinade",
+                 "Caribbean",
+                 "Gluten Free",
+                 "Omnivore",
+                 2,
                  5,
                  5,
                  30,
-                 "Easy")
+                 "Easy",
+                 "All",
+                 None,
+                 [IngredientsSection("Spices", [ingred1.__dict__, ingred2.__dict__, ingred3.__dict__, ingred4.__dict__]).__dict__, IngredientsSection("Proteins", [ingred10.__dict__]).__dict__],
+                 [StepsSection("Jerk Chicken", steps1).__dict__, StepsSection("Garlic Chicken", steps2).__dict__],
+                 ["Absolutely smashin","Smashing cause good"],
+                 ["Chicken", "Marinade"])
 
 recipe2 = Recipe("Garlic Chicken Marinade",
                  "Lacey Baier",
-                 "Sauce",
                  "This easy jerk chicken marinade is Caribbean-inspired and full of spice and flavor",
                  "https://www.asweetpeachef.com/best-chicken-marinades/#wprm-recipe-container-22000",
+                 None,
+                 "Marinade",
+                 "American",
+                 "Gluten Free",
+                 "Omnivore",
+                 2,
+                 5,
+                 5,
+                 30,
+                 "Easy",
+                 "All",
                  None,
                  [IngredientsSection("Jerk Chicken", [ingred6, ingred7, ingred8, ingred9]), IngredientsSection("Garlic Chicken", [ingred10])],
                  [StepsSection("Jerk Chicken", steps1), StepsSection("Garlic Chicken", steps2)],
                  ["Absolutely smashin","Smashing cause good"],
-                 "2 Chicken Breasts",
-                 "GlutenFree",
-                 "Regular",
-                 5,
-                 5,
-                 30,
-                 "Easy")
+                 ["Chicken", "Marinade"])
 
 recipeList = [recipe1, recipe2]
-print(recipeList)
+# print(recipeList)
 #aggregateIngredients(recipeList)
-print(recipe1)
+# print(recipe1)
 
+json = json.dumps(recipe1.__dict__, indent=3)
+print(json)
+
+#mongo.insertSingleRecord("RecipeGenerator", "Recipes", recipe1.__dict__)
+    
+    
+    
+# Chocolate chip cookies recipe
+ingredSectionC = IngredientsSection(
+    None,
+    [
+        Ingredient("Cake Flour", "2", "cups", "King Arthur", ["Measurement is 2 cups minus 2 tbsp"]).__dict__,
+        Ingredient("Bread Flour", "1 2/3", "cups").__dict__,
+        Ingredient("Baking Soda", "1 1/4", "tsp").__dict__,
+        Ingredient("Baking Powder", "1 1/2", "tsp").__dict__,
+        Ingredient("Kosher Salt", "1 1/2", "tsp").__dict__,
+        Ingredient("Unsalted Butter", "2 1/2", "sticks", None, ["Room Temperature"]).__dict__,
+        Ingredient("Light Brown Sugar", "1 1/4", "cups").__dict__,
+        Ingredient("Granulated Sugar", "1", "cup", None, ["Measurement is 1 cup plus 2 tbsp"]).__dict__,
+        Ingredient("Large Eggs", "2", None).__dict__,
+        Ingredient("Vanilla Extract", "2", "tsp").__dict__,
+        Ingredient("Bittersweet Chocolate", "1 1/4", "pounds", None, ["Chocolate discs work best", "At least 60% cacao"]).__dict__,
+        Ingredient("Sea Salt", None, None, None, "To Taste").__dict__
+    ]
+)
+stepSectionC = StepsSection(
+    None,
+    [
+        "Sift flours, baking soda, baking powder and kosher salt into a bowl. Set aside.",
+        "Using a stand mixer fitted with paddle attachment, cream butter and sugars together until very light, about 5 minutes.",
+        "Add the eggs, one at a time, mixing well after each addition. Stir in the vanilla.",
+        "Reduce speed to low, add the flour mixture and mix until just combined, 5 to 10 seconds.",
+        "Drop the chocolate chunks in and incorporate them without breaking them. You may have to do this by hand with a spatula. ",
+        "Press plastic wrap against dough and refrigerate for 24 to 36 hours. (I vote 36 hours.) Dough may be used in batches, and can be refrigerated for up to 72 hours.",
+        "When you’re ready to bake, fire up the oven to 350° (176°C). Line a baking sheet with parchment paper or a nonstick baking mat. Set aside.",
+        "Scoop six 3 1/2-ounce mounds of dough (the size of generous golf balls) onto a baking sheet, making sure to turn horizontally any chocolate pieces that are poking up; it will make for a more attractive cookie. You can also freeze the balls in a resealable plastic bag.) Sprinkle lightly with sea salt.",
+        "Bake the cookies until golden brown but still soft, 18 to 20 minutes. You’ll know the cookies are done when the tops have the caramel folds of a Shar Pei.",
+        "Transfer sheet to a wire rack for 10 minutes, then slip cookies onto another wire rack to cool a bit more. Repeat with the remaining dough. Eat warm, with a big napkin."
+    ]
+)
+
+recipeC = Recipe(
+    "David Leite's Chocolate Chip Cookies",
+    "David Leite",
+    "Say hello to the chocolate chip cookie recipe that started an Internet craze and made bakers rethink how to make cookies. They originally appeared in the July 9, 2008 edition of the New York Times in an article written by our Fearless Leader, David Leite. What makes them so damn special is the dough is refrigerated for 24 to 36 hours for a more complex flavor and greater variation in texture. Sea salt is the finishing touch.",
+    "https://leitesculinaria.com/9951/recipes-perfect-chocolate-chip-cookies.html",
+    None,
+    "Dessert",
+    "American",
+    "Not Gluten Free",
+    "Omnivore",
+    18,
+    15,
+    20,
+    8640,
+    "Easy",
+    "All",
+    ["Oven"],
+    ingredSectionC.__dict__,
+    stepSectionC.__dict__,
+    None,
+    ["Chocolate Chip", "Cookies", "Baked"]
+)
+
+#mongo.insertSingleRecord("RecipeGenerator", "Recipes", recipeC.__dict__)
+
+
+# Souffle cookies recipe
+ingredSectionDa = IngredientsSection(
+    "Ramekin Lining",
+    [
+        Ingredient("Unsalted Butter", "2", "tbsp", None, ["Melted butter"]).__dict__,
+        Ingredient("Granulated Sugar", "2", "tbsp", None, None).__dict__
+    ]
+)
+ingredSectionDb = IngredientsSection(
+    "Souffles",
+    [
+        Ingredient("Unsweetened Chocolate", "2", "oz", None, ["Chopped up"]).__dict__,
+        Ingredient("Semisweet Chocolate Chips", "1/3", "cup", None, None).__dict__,
+        Ingredient("All Purpose Flour", "1/3", "cup", None, ["Can subsitute with Bread Flour", "Measurement is 1/3 cup plus 1 tbsp"]).__dict__,
+        Ingredient("Unsalted Butter", "3", "tbsp", None, ["Room Temperature"]).__dict__,
+        Ingredient("Milk", "1", "cup", None, "Cold milk").__dict__,
+        Ingredient("Large Eggs", "6", "Yolks", None, None).__dict__,
+        Ingredient("Large Eggs", "5", "Whites", None, None).__dict__,
+        Ingredient("Vanilla Extract", "1", "tsp", None, None).__dict__,
+        Ingredient("Granulated Sugar", "1/3", "cup", None, ["Measurement is 1/3 cup plus 1 tbsp"]).__dict__,
+        Ingredient("Powdered Sugar", "1/4", "Cup", None, None).__dict__
+    ]
+)
+stepSectionD = StepsSection(
+    None,
+    [
+        "Preheat oven to 375 F. Line a baking sheet with parchment paper.",
+        "To prepare the ramekins: Brush the bottoms and sides of eight 5-ounce ramekins with the melted butter. Divide the granulated sugar among the ramekins and turn them to thoroughly coat the bottoms and sides. Discard any extra sugar.",
+        "To make the souffles: In a small stainless steel bowl or the top of a double boiler, combine the chopped chocolate and chocolate chips. Nest the bowl over a pot of barely simmering water (the bowl should not touch the water) and stir the chocolate until melted (taking care not to get any water in the bowl), Set the bowl aside off the heat.",
+        "In a medium saucepan, melt the butter over medium heat. Sprinkle in the flour and whick until the flour is incorporated and the mixture thickens, about 1 minute. Reduce the heat to low and whisk in the milk. Continue whisking until the mixture becomes smooth, 2 to 3 minutes. Remove the saucepan from the heat. Transfer the mixture to the bowl with the melted chocolate and stir to combine. Slowly stir the egg yolks into the chocolate mixture. Set aside.",
+        "In a bowl, with an electric mixer fitted with the whisk, whip the egg whites and vanilla until the whites start to get foamy, then sprinkle in the sugar. Continue whipping the egg whites on medium speed until they form soft peaks and the consistency resembles whipped cream, about 3 minutes.",
+        "Use a spatula to fold about one-third of egg whites into the chocolate mixture, carefully lifting from the bottom and folding over. Fold in half the remaining egg whites, then the last of the egg whites, taking care not to deflate the mixture.",
+        "Divide the mixture among the prepared ramekins and place them on the prepared baking sheet.",
+        "Bake the souffles undisturbed until they have risen over the top of the rims, 12 to 15 minutes.",
+        "Pour the powdered sugar into a sifter or fine-mesh sieve and gently tap over each souffle immediately as it comes out of the oven.",
+        "Serve immediately"
+    ]
+)
+
+recipeD = Recipe(
+    "Chocolate Souffles",
+    "Joanna Gaines",
+    None,
+    "Magnolia Table Vol 2, Page 291",
+    None,
+    "Dessert",
+    "American",
+    "Not Gluten Free",
+    "Omnivore",
+    18,
+    30,
+    15,
+    0,
+    "Medium",
+    "All",
+    ["Oven, Stove Top"],
+    [ingredSectionDa.__dict__, ingredSectionDb.__dict__],
+    stepSectionD.__dict__,
+    None,
+    ["Souffle", "Chocolate", "Baked"]
+)
+
+mongo.insertSingleRecord("RecipeGenerator", "Recipes", recipeD.__dict__)
