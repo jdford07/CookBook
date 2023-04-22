@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Recipe Form</title>
+</head>
+
+<body>
+
+    <form>
+        <section>
+            <p>
+                <label for="recipeTitle">
+                    <span>Recipe Title: </span>
+                </label>
+                <input type="text" id="recipeTitle" name="recipetitle1" />
+            </p>
+
+            <p>
+                <label for="recipeAuthor">
+                    <span>Recipe Author: </span>
+                </label>
+                <input type="text" id="recipeAuthor" name="recipeAuthor" />
+            </p>
+
+            <p>
+                <label for="recipeDescription">
+                    <span>Recipe Description: </span>
+                </label>
+                <textarea type="text" id="recipeDescription" name="recipeDescription" rows="3" cols="75"></textarea>
+            </p>
+
+            <p>
+                <label for="recipeSource">
+                    <span>Recipe Source: </span>
+                </label>
+                <input type="text" id="recipeSource" name="recipeSource" />
+            </p>
+
+            <p>
+                <label for="recipeCookTime">
+                    <span>Recipe Cook Time: </span>
+                </label>
+                <input type="text" id="recipeCookTime" name="recipeCookTime" />
+
+                <label for="recipePrepTime">
+                    <span>Recipe Prep Time: </span>
+                </label>
+                <input type="text" id="recipePrepTime" name="recipePrepTime" />
+
+                <label for="recipeRestTime">
+                    <span>Recipe Rest Time: </span>
+                </label>
+                <input type="text" id="recipeRestTime" name="recipeRestTime" />
+            </p>
+
+            <p>
+                <label for="recipeCategory">
+                    <span>Recipe Category: </span>
+                </label>
+                <select id="recipeCategory" name="recipeCategory">
+                    <option value="Seasoning">Seasoning</option>
+                    <option value="Appetizer">Appetizer</option>
+                    <option value="Base">Base</option>
+                    <option value="Side">Side</option>
+                    <option value="Snack">Snack</option>
+                    <option value="Drink">Drink</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="recipeCuisine">
+                    <span>Recipe Cuisine Type: </span>
+                </label>
+                <select id="recipeCuisine" name="recipeCuisine">
+                    <option value="American">American</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Greek">Greek</option>
+                    <option value="German">German</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="recipeGlutenType">
+                    <span>Recipe Gluten Type: </span>
+                </label>
+                <select id="recipeGlutenType" name="recipeGlutenType">
+                    <option value="GlutenFree">Gluten Free</option>
+                    <option value="NotGlutenFree">Not Gluten Free</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="recipeDietType">
+                    <span>Recipe Diet Type:</span>
+                </label>
+
+                <input type="checkbox" id="omnivore" name="recipeDiet" value="Omnivore" />
+                <label for="Omnivore">Omnivore</label>
+
+                <input type="checkbox" id="Vegetarian" name="recipeDiet" value="Vegetarian" />
+                <label for="Vegetarian">Vegetarian</label>
+
+                <input type="checkbox" id="Vegan" name="recipeDiet" value="Vegan" />
+                <label for="Vegan">Vegan</label>
+            </p>
+
+            <p>
+                <label for="recipeDifficulty">
+                    <span>Recipe Difficulty: </span>
+                </label>
+                <select id="recipeDifficulty" name="recipeDifficulty">
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                    <option value="Elite">Elite</option>
+                    <option value="Master">Master</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="recipeSeason">
+                    <span>Recipe Difficulty: </span>
+                </label>
+                <select id="recipeSeason" name="recipeSeason">
+                    <option value="None">None</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Winter">Winter</option>
+                    <option value="Fall">Fall</option>
+                    <option value="Spring">Spring</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="recipeCookingMethod">
+                    <span>Recipe Cooking Method:</span>
+                </label>
+
+                <input type="checkbox" id="Oven" name="recipeCookingMethod" value="Oven" />
+                <label for="Oven">Oven</label>
+
+                <input type="checkbox" id="AirFryer" name="recipeCookingMethod" value="AirFryer" />
+                <label for="AirFryer">Air Fryer</label>
+
+                <input type="checkbox" id="StoveTop" name="recipeCookingMethod" value="StoveTop" />
+                <label for="StoveTop">Stove Top</label>
+
+                <input type="checkbox" id="PressureCook" name="recipeCookingMethod" value="PressureCook" />
+                <label for="PressureCook">Pressure Cooker</label>
+
+                <input type="checkbox" id="Grill" name="recipeCookingMethod" value="Grill" />
+                <label for="Grill">Grill</label>
+            </p>
+        </section>
+
+        <section>
+
+        </section>
+
+        <section>
+
+
+        </section>
+    </form>
+
+</body>
+
+</html>
