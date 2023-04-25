@@ -12,18 +12,19 @@
 
     <form>
         <section>
+            <h1>General Recipe Information</h1>
             <p>
                 <label for="recipeTitle">
                     <span>Recipe Title: </span>
                 </label>
-                <input type="text" id="recipeTitle" name="recipetitle1" />
+                <input type="text" id="recipeTitle" name="recipetitle1" style="width:500px;" />
             </p>
 
             <p>
                 <label for="recipeAuthor">
                     <span>Recipe Author: </span>
                 </label>
-                <input type="text" id="recipeAuthor" name="recipeAuthor" />
+                <input type="text" id="recipeAuthor" name="recipeAuthor" style="width:300px;" />
             </p>
 
             <p>
@@ -37,7 +38,7 @@
                 <label for="recipeSource">
                     <span>Recipe Source: </span>
                 </label>
-                <input type="text" id="recipeSource" name="recipeSource" />
+                <input type="text" id="recipeSource" name="recipeSource" style="width:500px;" />
             </p>
 
             <p>
@@ -104,7 +105,7 @@
                     <span>Recipe Diet Type:</span>
                 </label>
 
-                <input type="checkbox" id="omnivore" name="recipeDiet" value="Omnivore" />
+                <input type="checkbox" id="Omnivore" name="recipeDiet" value="Omnivore" />
                 <label for="Omnivore">Omnivore</label>
 
                 <input type="checkbox" id="Vegetarian" name="recipeDiet" value="Vegetarian" />
@@ -129,7 +130,7 @@
 
             <p>
                 <label for="recipeSeason">
-                    <span>Recipe Difficulty: </span>
+                    <span>Recipe Season: </span>
                 </label>
                 <select id="recipeSeason" name="recipeSeason">
                     <option value="None">None</option>
@@ -160,15 +161,130 @@
                 <input type="checkbox" id="Grill" name="recipeCookingMethod" value="Grill" />
                 <label for="Grill">Grill</label>
             </p>
+            <div>
+                <ul>
+                    <li>
+                        <div>
+                            <p>
+                                <label for="recipeNote">
+                                    <span>Note: </span>
+                                </label>
+                                <input type="text" id="recipeNote" name="recipeNote" />
+                            </p>
+                        </div>
+                    </li>
+                    <button>Add Note</button>
+                </ul>
+            </div>
         </section>
 
         <section>
+            <h1>Recipe Ingredients</h1>
+            <ul>
+                <li>
+                    <div>
+                        <p>
+                            <label for="ingredSectionName">
+                                <span>Ingredient Section Name: </span>
+                            </label>
+                            <input type="text" id="ingredSectionName" name="ingredSectionName" />
+                        </p>
+                        <ul>
+                            <li>
+                                <div>
+                                    <p>
+                                        <label for="ingredName">
+                                            <span>Ingredient Name: </span>
+                                        </label>
+                                        <input type="text" id="ingredName" name="ingredName" />
+                                    </p>
+
+                                    <p>
+                                        <label for="ingredAmount">
+                                            <span>Ingredient Amount: </span>
+                                        </label>
+                                        <input type="text" id="ingredAmount" name="ingredAmount" />
+                                    </p>
+
+                                    <p>
+                                        <label for="ingredMeasurement">
+                                            <span>Ingredient Measurement: </span>
+                                        </label>
+                                        <input type="text" id="ingredMeasurement" name="ingredMeasurement"
+                                            style="width:60px;" />
+                                        <select id="ingredMeasurementAmount" name="ingredMeasurementAmount">
+                                            <option value="See Note">See Note</option>
+                                            <option value="tsp">tsp</option>
+                                            <option value="tbsp">tbsp</option>
+                                            <option value="cup">cup</option>
+                                            <option value="lb">lb</option>
+                                            <option value="oz">oz</option>
+                                        </select>
+                                    </p>
+
+                                    <p>
+                                        <label for="ingredSuggestedBrand">
+                                            <span>Ingredient Suggested Brand: </span>
+                                        </label>
+                                        <input type="text" id="ingredSuggestedBrand" name="ingredSuggestedBrand" />
+                                    </p>
+
+                                    <div>
+                                        <ul>
+                                            <li>
+                                                <div>
+                                                    <p>
+                                                        <label for="ingredNote">
+                                                            <span>Ingredient Note: </span>
+                                                        </label>
+                                                        <input type="text" id="ingredNote" name="ingredNote" />
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <button>Add Note</button>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <button>Add Ingredient</button>
+                        </ul>
+                    </div>
+                </li>
+                <button>Add Ingredient Section</button>
+            </ul>
+
 
         </section>
 
         <section>
-
-
+            <h1>Recipe Steps</h1>
+            <ul>
+                <li>
+                    <div>
+                        <p>
+                            <label for="stepsSectionName">
+                                <span>Steps Section Name: </span>
+                            </label>
+                            <input type="text" id="stepsSectionName" name="stepsSectionName" />
+                        </p>
+                        <ul>
+                            <li>
+                                <div>
+                                    <p>
+                                        <label for="stepName">
+                                            <span>Step: </span>
+                                        </label>
+                                        <textarea type="text" id="stepName" name="stepName" rows="1"
+                                            cols="75"></textarea>
+                                    </p>
+                                </div>
+                            </li>
+                            <button>Add Step</button>
+                        </ul>
+                    </div>
+                </li>
+                <button>Add Step Section</button>
+            </ul>
         </section>
     </form>
 
